@@ -12,6 +12,7 @@ class Home extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<Home> {
+  TextEditingController _controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     var ldp = ref.watch(listDataProvider);
@@ -25,7 +26,32 @@ class _HomeState extends ConsumerState<Home> {
 
     return Scaffold(
       appBar: AppBar(title: Text(ldp.title)),
-      body: useMobileLayout ? MobileView(ldp: ldp) : TabletView(ldp: ldp),
+      body: Column(
+        children: [
+          TextFormField(
+            controller: _controller,
+            onChanged: (value) => ldp.filterResults(value),
+            decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      _controller.text = "";
+                    });
+
+                    ldp.clearFilters();
+                  },
+                ),
+                hintText: 'Search...',
+                border: InputBorder.none),
+          ),
+          Expanded(
+              child: useMobileLayout
+                  ? MobileView(ldp: ldp)
+                  : TabletView(ldp: ldp)),
+        ],
+      ),
     );
   }
 }

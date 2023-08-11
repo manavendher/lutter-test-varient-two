@@ -25,12 +25,10 @@ class _TabletViewState extends State<TabletView> {
               return ListTile(
                 title: Text(
                   widget.ldp.data[index]["Text"].toString().split(" - ")[0],
-                  style: TextStyle(fontSize: 30),
+                  style: const TextStyle(fontSize: 30),
                 ),
                 onTap: () {
-                  for (int i = 0; i < widget.ldp.data.length; i++) {
-                    widget.ldp.data[i]["selected"] = false;
-                  }
+                  widget.ldp.clearSelections();
                   widget.ldp.data[index]["selected"] = true;
                   widget.ldp.notify();
                 },

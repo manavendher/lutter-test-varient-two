@@ -19,9 +19,7 @@ class MobileView extends StatelessWidget {
             style: const TextStyle(fontSize: 20),
           ),
           onTap: () {
-            for (int i = 0; i < ldp.data.length; i++) {
-              ldp.data[i]["selected"] = false;
-            }
+            ldp.clearSelections();
             ldp.data[index]["selected"] = true;
             ldp.notify();
             Navigator.of(context).push(
